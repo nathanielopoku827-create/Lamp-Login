@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Welcome Back</title>
+<style>
+ *{margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,
+    system-ui,sans-serif
+}
+  body{background:#0e0d0a;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    color:#fff;
+    transition:0.5s
+}
+  .page{width:1100px;
+    max-width:100%;
+    background:#141311;
+    border-radius:24px;
+    display:grid;
+    grid-template-columns:1fr 420px;
+    overflow:hidden;
+    border:1px solid #26241f
+}
+.left{
+  position:relative;
+  background:radial-gradient(circle at 50% 20%, #1e1c15 0%, #0e0d0a 70%)
+  ;display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:620px;
+  overflow:hidden;
+  cursor:pointer;
+}
+.lamp-wrap{
+  position:relative;
+  width:320px;
+  height:480px
+}
+.light{
+  position:absolute;
+  top:118px;
+  left:50%;
+  transform:translateX(-50%);
+  width:300px;
+  height:340px;
+  background:linear-gradient(to bottom, rgba(255,210,90,0.35), rgba(255,210,90,0.05));
+  clip-path:polygon(42% 0,58% 0,100% 100%,0% 100%);
+  transition:0.4s;
+  opacity:1
+}
+.lamp-head{
+  position:absolute;
+  top:80px;
+  left:50%;
+  transform:translateX(-50%);
+  width:140px;height:48px;
+  background:#1a1a1a;
+  border-radius:24px 24px 8px 8px;
+  border:1px solid #333
+}
+.bulb{position:absolute;
+  top:122px;
+  left:50%;
+  transform:translateX(-50%);
+  width:80px;
+  height:12px;
+  background:#ffdf7e;
+  border-radius:50%;
+  box-shadow:0 0 40px 20px rgba(255,215,100,0.5);
+  transition:0.4s
+}
+.stand{
+  position:absolute;
+  top:126px;
+  left:50%;
+  transform:translateX(-50%);
+  width:4px;
+  height:260px;
+  background:#2a2a2a
+}
+.base{position:absolute;
+  bottom:60px;
+  left:50%;
+  transform:translateX(-50%);
+  width:80px;
+  height:8px;
+  background:#222;
+  border-radius:4px
+}
+.pull{
+  position:absolute;
+  top:128px;
+  left:calc(50% + 38px);
+  width:2px;
+  height:60px;
+  background:#444
+}
+.pull-dot{position:absolute;
+  top:188px;
+  left:calc(50% + 34px);
+  width:10px;
+  height:14px;
+  background:#ffdf7e;
+  border-radius:50%;
+  box-shadow:0 0 10px rgba(255,215,100,0.8);
+  cursor:pointer;
+  transition:0.2s
+}
+.pull-dot:active{transform:translateY(10px)}
+body.off .light{opacity:0}
+body.off .bulb{box-shadow:none;background:#333}
+.right{
+  background:#1c1b18;
+  padding:48px 40px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center
+}
+.right h2{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+}
+.sub{
+  color:#8a877f;
+  font-size:13px;
+  text-align:center;
+  margin:8px 0 28px
+}
+.input{
+  position:relative;
+  margin-bottom:14px
+}
+.input input{
+  width:100%;
+  background:#0f0e0c;
+  border:1px solid #2a2823;
+  padding:14px 44px;
+  border-radius:12px;
+  color:#fff;
+  font-size:14px;
+  outline:none;
+  transition:0.2s
+}
+.input input:focus{
+  border-color:#ffcc33
+}
+.input input.error{
+  border-color:#ff4d4d
+}
+.err{
+  font-size:11px;
+  color:#ff6b6b;
+  margin-top:4px;
+  display:none
+}
+.input .icon{
+  position:absolute;
+  left:16px;
+  top:50%;
+  transform:translateY(-50%);
+  opacity:0.6
+}
+.eye{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  opacity:0.6;
+  font-size:14px
+}
+.btn{
+  background:#ffcc33;
+  color:#111;
+  border:none;
+  padding:14px;
+  border-radius:12px;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+  margin-top:8px;
+  width:100%;
+  transition:0.2s
+}
+.btn:disabled{
+  opacity:0.6;
+  cursor:not-allowed
+}
+.divider{
+  text-align:center;
+  color:#6b6860;
+  font-size:11px;
+  margin:20px 0;
+  letter-spacing:1px}
+.social{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+.social button{
+  background:#2a2823;
+  border:1px solid #35322c;
+  color:#fff;
+  padding:12px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer
+}
+.toast{position:fixed;bottom:30px;left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  color:#111;
+  padding:12px 20px;
+  border-radius:100px;
+  font-size:13px;
+  font-weight:600;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+  z-index:99
+}
+.toast.show{
+  opacity:1;
+  bottom:40px
+}
+@media(max-width:900px){
+  .page{grid-template-columns:1fr}
+  .left{min-height:320px}
+  .lamp-wrap{transform:scale(0.7)}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="left" id="lampArea" title="Click lamp to switch">
+    <div class="lamp-wrap">
+      <div class="light" id="light"></div>
+      <div class="lamp-head"></div>
+      <div class="bulb" id="bulb"></div>
+      <div class="stand"></div>
+      <div class="base"></div>
+      <div class="pull"></div>
+      <div class="pull-dot" id="pull"></div>
+    </div>
+  </div>
+
+  <div class="right">
+    <h2>Welcome Back</h2>
+    <p class="sub">Enter your details to access your account</p>
+
+    <form id="form">
+      <div class="input">
+        <span class="icon">👤</span>
+        <input id="username" placeholder="Username"/>
+        <div class="err" id="e-user">Username required (min 3 chars)</div>
+      </div>
+
+      <div class="input">
+        <span class="icon">✉️</span>
+        <input id="email" placeholder="Email Address" type="email"/>
+        <div class="err" id="e-email">Enter a valid email</div>
+      </div>
+
+      <div class="input">
+        <span class="icon">🔒</span>
+        <input id="password" placeholder="Password" type="password"/>
+        <span class="eye" id="eye">👁️</span>
+        <div class="err" id="e-pass">Password must be 6+ chars</div>
+      </div>
+
+      <button class="btn" id="signBtn" type="submit">Sign In</button>
+    </form>
+
+    <div class="divider">OR CONTINUE WITH</div>
+    <div class="social">
+      <button id="googleBtn">G Google</button>
+      <button id="githubBtn">● GitHub</button>
+    </div>
+    <p style="text-align:center;margin-top:24px;font-size:12px;color:#6b6860">Don't have account? <a href="#" style="color:#ffcc33;text-decoration:none">Sign up</a></p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+let lampOn = true;
+
+// Lamp toggle
+function toggleLamp(){
+  lampOn = !lampOn;
+  document.body.classList.toggle('off', !lampOn);
+  showToast(lampOn ? 'Light on 💡' : 'Light off 🌙');
+}
+$('pull').onclick = toggleLamp;
+$('lampArea').onclick = toggleLamp;
+
+// Show/hide password
+$('eye').onclick = () => {
+  const p = $('password');
+  p.type = p.type === 'password' ? 'text' : 'password';
+  $('eye').textContent = p.type === 'text' ? '🙈' : '👁️';
+};
+
+// Validation
+function validate(){
+  let ok = true;
+  const u = $('username').value.trim();
+  const e = $('email').value.trim();
+  const pw = $('password').value.trim();
+
+  if(u.length < 3){ $('username').classList.add('error'); $('e-user').style.display='block'; ok=false; }
+  else{ $('username').classList.remove('error'); $('e-user').style.display='none'; }
+
+  if(!/^\S+@\S+\.\S+$/.test(e)){ $('email').classList.add('error'); $('e-email').style.display='block'; ok=false; }
+  else{ $('email').classList.remove('error'); $('e-email').style.display='none'; }
+
+  if(pw.length < 6){ $('password').classList.add('error'); $('e-pass').style.display='block'; ok=false; }
+  else{ $('password').classList.remove('error'); $('e-pass').style.display='none'; }
+
+  return ok;
+}
+
+// Form submit
+$('form').addEventListener('submit', async (ev)=>{
+  ev.preventDefault();
+  if(!validate()) return;
+
+  const btn = $('signBtn');
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+
+  // fake API call
+  await new Promise(r=>setTimeout(r, 1500));
+
+  btn.textContent = 'Welcome! ✓';
+  showToast('Signed in as ' + $('username').value); 
+ 
+  // Reset after
+  setTimeout(()=>{
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  },2000);
+});
+
+// Social buttons
+$('googleBtn').onclick = ()=> showToast('Google login - connect Firebase Auth');
+$('githubBtn').onclick = ()=> showToast('GitHub login - connect OAuth');
+
+function showToast(msg){
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// Enter key focus glow effect on lamp
+document.querySelectorAll('input').forEach(inp=>{
+  inp.addEventListener('focus', ()=>{
+    if(!lampOn) toggleLamp();
+    $('bulb').style.transform = 'translateX(-50%) scale(1.2)';
+  });
+  inp.addEventListener('blur', ()=>{
+    $('bulb').style.transform = 'translateX(-50%) scale(1)';
+  });
+});
+</script>
+<?php
+
+?>
+</body>
+</html>
